@@ -1,0 +1,157 @@
+\documentclass{beamer}
+\usepackage[spanish, english]{babel}
+\selectlanguage{spanish}
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{spanish}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}%Para poder usar acentos y otras letras latinas del español
+\usepackage[T1]{fontenc}
+
+\usepackage{caption, subcaption}
+
+\bibliographystyle{bababbrv}
+
+\usetheme{Darmstadt}
+
+\title{Reconocimiento facial de mascotas}
+\subtitle{Enfocado en Perros y Gatos}
+\author[Gonz\'alez]{S.~Gonz\'alez\inst{1}}
+\institute[University de Chile]
+{
+	\inst{1}
+	Departamento de las Ciencias de la Computaci\'on\\
+	Universidad de Chile
+}
+
+\begin{document}
+	\frame{\titlepage}
+	\begin{frame}
+		\frametitle{Motivaci\'on.}
+		%CONTENT
+		\begin{itemize}
+			\item{
+				Las mascotas son parte de la familia. Suelen extraviarse y encontrarlas es difícil.
+			}
+			\item{
+				Aplicación en comederos automatizados, que reconoscan a la mascota.
+			}
+			\item{
+				Vigilancia. Uso de perros de ataque/robo de animales.
+			}
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Estado del Arte.}
+		%CONTENT
+		\selectlanguage{spanish}
+		\selectbiblanguage{spanish}
+		\bibliography{./informe}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Reconocimiento facial de gatos.}
+		%CONTENT
+		\url{http://harthur.github.io/kittydar/}
+
+		Utiliza método propuesto en \emph{Cat head detection-how to effectively exploit shape and texture features}\cite{zhang2008cat}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.27]{Captura.png}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Reconocimiento facial de gatos.}
+		%CONTENT
+		Comparación entre métodos.
+		\includegraphics[scale=0.15]{annotation.png}
+		\begin{itemize}
+			\item{
+				HOG.
+			}
+			\item{
+				Haar.
+			}
+			\item{
+				Detección de formas y textura conjunta.
+			}
+		\end{itemize}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.30]{cat-roc.png}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Resultados}
+		%CONTENT
+		\begin{figure}[H]
+			\centering
+			\subcaptionbox{}{\includegraphics[scale=0.07]{nw1.jpg}}
+			\subcaptionbox{}{\includegraphics[scale=0.38]{nw2.jpg}}
+			\subcaptionbox{}{\includegraphics[scale=0.39]{nw3.jpg}}
+			\caption{No reconoce gatitos.}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Resultados}
+		%CONTENT
+		\begin{figure}[H]
+			\centering
+			\subcaptionbox{}{\includegraphics[scale=0.3]{w1.png}}
+			\subcaptionbox{}{\includegraphics[scale=0.31]{w2.png}}
+			\caption{Reconoce algunos perros.}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Resultados}
+		%CONTENT
+		\begin{figure}[H]
+			\centering
+			\subcaptionbox{}{\includegraphics[scale=0.27]{f1.png}}
+			\subcaptionbox{}{\includegraphics[scale=0.28]{f2.png}}
+			\subcaptionbox{}{\includegraphics[scale=0.28]{f3.png}}
+			\caption{Reconoce... cosas.}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Clasificación en Razas de Gatos y Perros.}
+		%CONTENT
+		\emph{Cats and Dogs}.\cite{parkhi12a}
+		\begin{itemize}
+			\item{
+				HOG para reconocimiento de \emph{Forma}.
+			}
+			\item{
+				\emph{Bag of Words} para reconocimiento de \emph{textura}.
+			}
+		\end{itemize}
+		Combinaciones de Rostro, Cuerpo y Fondo.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.50]{faceheadimage.png}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Clasificación en Razas de Gatos y Perros.}
+		%CONTENT
+		\begin{figure}[H]
+			\centering
+			{\includegraphics[scale=0.27]{datasetEx.png}}
+			\caption{Dataset de razas de Perros y Gatos.}
+		\end{figure}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Reconocimiento facial de Perros.}
+		%CONTENT
+		\emph{Biometric Recognition for Pet Animal}.\cite{kumar2014biometric}
+
+		PCA \& Eigenfaces.
+	\end{frame}
+	\begin{frame}
+		\frametitle{Reconocimiento facial de Perros.}
+		%CONTENT
+		\begin{figure}[H]
+			\centering
+			{\includegraphics[scale=0.27]{dogaverage.png}}
+			\caption{Eigenfaces para Perros.}
+		\end{figure}
+	\end{frame}
+\end{document}
