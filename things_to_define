@@ -1,0 +1,41 @@
+Definición
+
+    - Cuál es el problema? 
+        Creo que sería bueno plantear aqui el problema de la vida real y su
+        abstraccion hacia el ramo.
+
+        aca las opciones eran, creo: 
+            a) multi-cat detection xd --> aqui el dataset podia ser un problema
+            b) cat race detecshun --> no se que tan bien resulte comparado con
+            el de zisserman xd que era super pro
+
+        hay que notar que el problema define el dataset xd una idea piola (imho)
+        es usar una motivacion parecida a la de zhang/sun/tang como que es un
+        paso hacia reconocer cosas mas especificas o algo asi
+
+    - Que solución proponen? 
+        Quiza aqui describirla mas como generalmente/abstracto, ya que despues se describe
+        de nuevo :P
+
+    - Qué funciones cumplirá su solución?
+        las condiciones en las que trabajará (esto define el dataset ;D)
+
+Estado del Arte 
+    - Qué trabajos relacionados existen?
+
+        tenemos el de zisserman, el de shape+texture
+
+        Este es de perros pero tiene técnicas parecidas y es de razas :D
+        http://www.umiacs.umd.edu/~kanazawa/papers/eccv2012_dog_final.pdf
+
+        podriamos ver si comparamos con algoritmos de aves, como hacen con el de
+        perros. igual todo eso depende de cuanto demore la
+        implementacion/pruebas xd
+
+Solución
+    - Qué aproximación o aproximaciones abordarán ustedes? 
+    - Alguna innovación?
+
+Evaluación
+    - métricas de comparación 
+    - datasets
