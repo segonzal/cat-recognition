@@ -28,8 +28,7 @@
 
 \begin{document}
 	\frame{\titlepage}
-	\begin{frame}
-		\frametitle{¿Cuál es el problema?}
+	\begin{frame}{¿Cuál es el problema?}
 		\begin{itemize}
 			\item{
 				Detección de múltiples rostros animales.\\
@@ -41,8 +40,7 @@
 			}
 		\end{itemize}
 	\end{frame}
-	\begin{frame}
-		\frametitle{¿Cuál es el problema?}
+	\begin{frame}{¿Cuál es el problema?}
 		%CONTENT
 		\begin{itemize}
 			\item{
@@ -55,26 +53,25 @@
 				Discriminar entre clases de perros, gatos, aves y flores es un problema de \textbf{Categorización fina de objetos} \textit{(fine  grained  object  categorization)}.
 			}
 		\end{itemize}
-		\centering
-		{\includegraphics[scale=0.2]{imagen/ggate.jpg}}
-		{\includegraphics[scale=0.14]{imagen/iguana.jpg}}
+        \begin{center}
+            {\includegraphics[scale=0.2]{imagen/ggate.jpg}}
+    		{\includegraphics[scale=0.14]{imagen/iguana.jpg}}
+        \end{center}
+
 	\end{frame}
 	\begin{frame}
 		\frametitle{¿Cuál es el problema?}
 		%CONTENT
 		\begin{itemize}
-			\item{
-				Las razas de animales pueden diferir en pequeñas características fenoitípicas.
-			}
-			\item{
-				Los animales tienen formas altamente deformables.
-			}
+			\item Las razas de animales pueden diferir en pequeñas características fenoitípicas.
+			\item Los animales tienen formas altamente deformables.
 		\end{itemize}
-		{\includegraphics[scale=0.2]{imagen/fitsisits.jpg}}
-		{\includegraphics[scale=0.5]{imagen/dogdiff.jpg}}
+        \begin{center}
+    		{\includegraphics[scale=0.2]{imagen/fitsisits.jpg}}
+	    	{\includegraphics[scale=0.5]{imagen/dogdiff.jpg}}
+        \end{center}
 	\end{frame}
-	\begin{frame}
-		\frametitle{Aplicación}
+	\begin{frame}{Aplicación}
 		\begin{itemize}
 			\item{El problema es similar a la clasificación de Aves.\\
 			Ej. Monitorear automáticamente la población de aves, de una determinada especie, en un parque forestal.\\
@@ -91,16 +88,43 @@
 	\begin{frame}{Función de nuestra solución}
 	\end{frame}
 
-    \begin{frame}{Estado del Arte: \emph{Cats and Dogs}}
+    \begin{frame}{Estado del Arte: Gatos y Perros \footnote{\emph{Cats and
+        Dogs}, Parkhi, Vedaldi, Zisserman y Jawahar, 2012.}}
+        \begin{itemize}
+            \item Modelo de partes deformables (HOG + resortes).
+            \item \emph{Bag-of-words} con descriptores SIFT. 
+            \item Segmentación automática mediante \emph{grab-cut}.
+        \end{itemize}
+        \begin{center}
+            \includegraphics[scale=0.3]{imagen/catsanddogs_annotation}
+        \end{center}
 	\end{frame}
 
-    \begin{frame}{Estado del Arte: \emph{Dog Breed Classification...}}
+    \begin{frame}{Estado del Arte: Clasificación de Razas de
+            Perros\footnote{\emph{Dog Breed Classification Using Part
+        Localization}, Liu, Kanazawa, Jacobs y Belhumeur, 2012. }}
+        \begin{itemize}
+            \item Detección de cara del perro.
+            \item Identificación de partes.
+            \item Histograma de color y descriptores SIFT en torno a las partes.
+        \end{itemize}
+        \begin{center}
+            \includegraphics[scale=0.15]{imagen/dogannotation}
+        \end{center}
 	\end{frame}
-
-    \begin{frame}{Estado del Arte: \emph{Burdes}}
-    \end{frame}
-
-    \begin{frame}{Estado del Arte: \emph{Cat Head Detection...}}
+    \begin{frame}{Estado del Arte: Detección de Gatos \footnote{\emph{Cat Head
+        Detection - How to Effectively Exploit Shape and Texture Features},
+Zhang, Sun, Tang, 2008}}
+        \begin{itemize}
+            \item No es clasificación, sino que detección.
+            \item Entrenan dos detectores con \emph{datasets} normalizados de
+                distinta forma.
+            \item Un clasificador fusiona la información de ambos para decidir
+                si está frente a un gato o no.
+        \end{itemize}
+        \begin{center}
+            \includegraphics[scale=0.25]{imagen/annotation}
+        \end{center}
     \end{frame}
 
 	\begin{frame}{Nuestra aproximación}
