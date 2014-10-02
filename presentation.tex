@@ -91,8 +91,10 @@
 		Modelo probabilistico de color o descriptor de color.
 	\end{frame}
 	\begin{frame}{Función de nuestra solución}
-		Dado una imagen de consulta, en la que el rostro del animal ya ha sido detectado y etiquetado, se determinará la raza a la que pertenesca. 
-	\end{frame}
+        Dada una imagen de consulta, en la que el rostro de un gato o perro se
+        encuentra identificado, el sistema busca determinar la raza a la que
+        pertenezca.  
+    \end{frame}
 
     \begin{frame}{Estado del Arte: Gatos y Perros \footnote{\emph{Cats and
         Dogs}, Parkhi, Vedaldi, Zisserman y Jawahar, 2012.}}
@@ -134,16 +136,25 @@ Zhang, Sun, Tang, 2008}}
     \end{frame}
 
 	\begin{frame}{Nuestra aproximación}
-		Trabajaremos sobre imágenes en las que los rostros de los animales ya ha sido anotada.\\
+        Se utilizará un \emph{dataset} en el que la ubicación de los rostros de
+        los animales ya está dada.
+
 		Buscamos describir al animal por su textura, forma y color.
 	\end{frame}
 	\begin{frame}{Innovaciones}
-		Para trabajar con perros hay que crear un dataset anotado.
-		Ya que necesitamos alinear los perros para extraer forma.
+        \begin{itemize}
+            \item Una opción es intentar aplicar elementos del método utilizado
+                por Zhang et al.
+            \item Sin embargo, esto requeriría construir un dataset nuevo.
+        \end{itemize}
 	\end{frame}
 	\begin{frame}{Evaluación}
-		Para determinar el desempeño de la clasificación usaremos una matriz de confusión.
+        \begin{itemize}
+            \item Problema de clasificación $\implies$ matriz de confusión
+            \item Comparación con \emph{Cats and Dogs}.
+        \end{itemize}
 	\end{frame}
+
 %COMENTARIO INICIA ACA=================================================================================================
 \begin{comment}
 
