@@ -13,9 +13,11 @@
 
 \usetheme{Darmstadt}
 
-\title{Reconocimiento facial de mascotas}
-\subtitle{Enfocado en Perros y Gatos}
-\author[Gonz\'alez]{S.~Gonz\'alez\inst{1}}
+\title{Clasificación de Razas}
+\subtitle{De Perros y Gatos}
+
+
+\author[Bahamonde, Gonz\'alez]{J.~Bahamonde\inst{1} \and S.~Gonz\'alez\inst{1}}
 \institute[University de Chile]
 {
 	\inst{1}
@@ -30,22 +32,39 @@
 		%CONTENT
 		\begin{itemize}
 			\item{
-				Las mascotas son parte de la familia. Suelen extraviarse y encontrarlas es difícil.
+				El problema de clasificación entre clases muy disimilares ha sido ampliamente estudiado\:
 			}
 			\item{
-				Aplicación en comederos automatizados, que reconoscan a la mascota.
+				El dataset Caltech presenta el problema de discriminar el Golden Gate con una iguana.
 			}
 			\item{
-				Vigilancia. Uso de perros de ataque/robo de animales.
+				Discriminar entre clases de perros, gatos, aves y flores es un problema de \textbf{Categorización fina de objetos} \textit{(fine  grained  object  categorization)}.
 			}
 		\end{itemize}
+		\centering
+		{\includegraphics[scale=0.2]{imagen/ggate.jpg}}
+		{\includegraphics[scale=0.14]{imagen/iguana.jpg}}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Motivaci\'on.}
+		%CONTENT
+		\begin{itemize}
+			\item{
+				Las razas de animales pueden diferir en pequeñas características fenoiípicas.
+			}
+			\item{
+				Los animales tienen formas altamente deformables.
+			}
+		\end{itemize}
+		{\includegraphics[scale=0.2]{imagen/fitsisits.jpg}}
+		{\includegraphics[scale=0.5]{imagen/dogdiff.jpg}}
 	\end{frame}
 	\begin{frame}
 		\frametitle{Estado del Arte.}
 		%CONTENT
 		\selectlanguage{spanish}
 		\selectbiblanguage{spanish}
-		\bibliography{./presentacion}
+		\bibliography{./presentation}
 	\end{frame}
 	\begin{frame}
 		\frametitle{Reconocimiento facial de gatos.}
