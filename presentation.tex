@@ -28,10 +28,64 @@
 
 \begin{document}
 	\frame{\titlepage}
-
-    \begin{frame}{El Problema}
-    \end{frame}
-
+	\begin{frame}
+		\frametitle{¿Cuál es el problema?}
+		\begin{itemize}
+			\item{
+				Detección de múltiples rostros animales.\\
+				{\includegraphics[scale=0.3]{imagen/catsydogs.jpg}}
+			}
+			\item{
+				Reconocimiento de raza de animales.\\
+				{\includegraphics[scale=0.6]{imagen/doguebreed.jpg}}
+			}
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{¿Cuál es el problema?}
+		%CONTENT
+		\begin{itemize}
+			\item{
+				El problema de clasificación entre clases muy disimilares ha sido ampliamente estudiado.
+			}
+			\item{
+				El dataset Caltech presenta el problema de discriminar el Golden Gate con una iguana.
+			}
+			\item{
+				Discriminar entre clases de perros, gatos, aves y flores es un problema de \textbf{Categorización fina de objetos} \textit{(fine  grained  object  categorization)}.
+			}
+		\end{itemize}
+		\centering
+		{\includegraphics[scale=0.2]{imagen/ggate.jpg}}
+		{\includegraphics[scale=0.14]{imagen/iguana.jpg}}
+	\end{frame}
+	\begin{frame}
+		\frametitle{¿Cuál es el problema?}
+		%CONTENT
+		\begin{itemize}
+			\item{
+				Las razas de animales pueden diferir en pequeñas características fenoitípicas.
+			}
+			\item{
+				Los animales tienen formas altamente deformables.
+			}
+		\end{itemize}
+		{\includegraphics[scale=0.2]{imagen/fitsisits.jpg}}
+		{\includegraphics[scale=0.5]{imagen/dogdiff.jpg}}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aplicación}
+		\begin{itemize}
+			\item{El problema es similar a la clasificación de Aves.\\
+			Ej. Monitorear automáticamente la población de aves, de una determinada especie, en un parque forestal.\\
+			}
+			\item{También es similar a la clasificación de  flores.\\
+			Ej. Determinar la especie de una flor a partir de su fotografía, puede servir a herboristas en el campo.
+			}
+			\item{La detección automática de razas de animales, puede servir de apoyo a veterinarios, o a buscar animales perdidos.\\
+			}
+		\end{itemize}
+	\end{frame}
 	\begin{frame}{Propuesta de solución}
 	\end{frame}
 	\begin{frame}{Función de nuestra solución}
