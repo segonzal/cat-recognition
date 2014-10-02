@@ -39,3 +39,40 @@ Solución
 Evaluación
     - métricas de comparación 
     - datasets
+    
+==========================================================
+>primera etapa deteccion de especie: CAT vs DOG
+>segunda etapa clasificacion de raza.
+
+1)
+Usar método de grapcut (graphcut ??) para encontrar el animal.
+De ahí crear descriptores de los animales.
+
+===Qué descriptores?===
+En los papers que vimos hay:
+<>Zisserman usa SIFT y bag of words
+<>Haar of Oriented Gradients como en Cat face recognition
+<>Modelo probabilistico de color como en Dogues
+
+===Proponer un método?===
+<>Se me ocurrió haceer un histograma de gradientes por canal, y concatenar los histogramas.
+si orientamos cada canal en 4 direcciones (pensando en ejes, no en cardinales) por canal tenemos un descriptor de 12 dimensiones.
+Podemos probar al dividir la imagen del animal.
+Si mi intuición es correcta, el HOG por canal entregará información de textura y color. Mientras que usar grapcat para definir bien la forma.
+<>Idea: indice de deformación. Tomamos la bounding box minima del output de grapcut. La dividimos en n x m celdas:
+|---|---|---|
+|   |   |   |
+|---|---|---|
+|   |   |   |
+|---|---|---|
+|   |   |   |
+|---|---|---|
+Calculamos cuanto hay que deformar la division para obtener el bounding minimo. por cada BBox obtenemos un descriptor de deformación de 4 dimensiones. el descriptor de forma de la imagen es de 4*n*m.
+
+La intuición dice: Pensando en los rostros de los animales, tienen un contorno muy identificable, los gatos son MUY diferentes a los perros en contorno. Aún puede haber confusión con Shibas por ej.
+
+===¿Como clasificar?===
+En los paper usan más que nada SVM y Zisserman usa redes neurales.
+
+2)
+Zisserman es la luz.
