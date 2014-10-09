@@ -27,7 +27,9 @@
 }
 
 \begin{document}
-\frame{\titlepage}
+\begin{frame}[label=firstframe]
+      \titlepage % (Or whatever else goes here.)
+\end{frame}
 \begin{frame}{El problema}
     El determinar automáticamente razas y especies de animales y plantas
     aparece en diversos contextos:
@@ -176,6 +178,7 @@
     \begin{itemize}
         \item $\approx 7400$ imágenes de 25 razas de perros y 12 de gatos
             ($\approx 200$ por raza).
+            \pause
         \item Anotaciones de forma y raza.
             \pause
             \begin{center}
@@ -184,6 +187,7 @@
     \end{itemize}
 \end{frame}
 
+\againframe{firstframe}
 %COMENTARIO INICIA ACA=================================================================================================
 \begin{comment}
 
