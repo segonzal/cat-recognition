@@ -27,6 +27,7 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
     for (int i = 0; i < data.size(); ++i)
     {
         vector<Mat> histograms = data[i];
+        stream << labels[i];
 
         for (int k = 0; k < histograms.size(); ++k)
         {
@@ -34,8 +35,6 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
             int len = descriptor.cols;
             double val;
     
-            stream << labels[i];
-
             for(int j = 0; j < len; ++j)
             {
                 val = descriptor.at<float>(0, j);
@@ -45,8 +44,8 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
                 stream << " " << (len * k + j + 1) << ":" << val;
             }
 
-            stream << endl;
         }       
+        stream << endl;
     }
 
 }
@@ -178,11 +177,11 @@ int main (int argc, const char** argv)
         
         param_name << out_name << "_" << K_values[k_idx];
 
-        //ofstream histograms_file;
-        //histograms_file.open(param_name.str().c_str());
-        save_sparse_descriptors(cout, labels, histograms);
-        //save_sparse_descriptors(histograms_file, labels, histograms);
-        //histograms_file.close();
+        ofstream histograms_file;
+        histograms_file.open(param_name.str().c_str());
+        //save_sparse_descriptors(cout, labels, histograms);
+        save_sparse_descriptors(histograms_file, labels, histograms);
+        histograms_file.close();
         param_name.str(std::string());
 
     }
