@@ -56,7 +56,7 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
 int main (int argc, const char** argv) 
 {
 
-    int K_values[4] = { 100, 500, 1000, 1500 };
+    int K_values[4] = { 1000, 1200, 1400, 1600 };
 
     Ptr<FeatureDetector > detector(new SiftFeatureDetector());
     Ptr<BOWImgDescriptorExtractor> bowides[4];
