@@ -5,6 +5,9 @@ kmeans: kmeans.cpp
 	g++ kmeans.cpp -O3 -o kmeans -lopencv_core -lopencv_highgui -lopencv_features2d
 
 histograms: histograms.cpp
-	g++ -g histograms.cpp  -o histograms -lopencv_core -lopencv_highgui -lopencv_features2d -lopencv_imgproc
+	g++  histograms.cpp -O3  -o histograms -lopencv_core -lopencv_highgui -lopencv_features2d -lopencv_imgproc
+
+histograms2: histograms.cpp
+	g++ histograms.cpp -O3  -o histograms2 -lopencv_core -lopencv_highgui -lopencv_features2d -lopencv_imgproc
 clean:
 	rm kmeans generate_descriptors 

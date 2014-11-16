@@ -10,19 +10,11 @@
 using namespace std;
 using namespace cv;
 
-String dog_folder = "./dogs/train/";
-String cat_folder = "./cats/train/";
+String out_name = "eval";
 
-String out_name = "train";
+String cats_file = "./cat_eval.txt";
+String dogs_file = "./dog_eval.txt";
 
-String cats_file = "./cats.txt";
-String dogs_file = "./dogs.txt";
-
-int dog_size= 1;
-int cat_size = 1;
-
-// aweonao eran doubles no ints :3 por eso todo se iba a la mierda, saludos
-// cordiales
 void save_sparse_descriptors(ostream& stream, vector<int> labels,
         vector< vector<Mat> > data) 
 {
@@ -38,6 +30,8 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
             int len = descriptor.cols;
             double val;
     
+            if (descriptor.rows == 0) continue;
+
             for(int j = 0; j < len; ++j)
             {
                 val = descriptor.at<float>(0, j);
@@ -94,7 +88,7 @@ int main (int argc, const char** argv)
 
     while (getline(dogfile, line))
     {
-
+        cout << line << endl;
         vector<Mat> image_histograms;
         img = imread(line, CV_LOAD_IMAGE_COLOR);
         cvtColor(img,grayimg,CV_BGR2GRAY);
@@ -122,6 +116,7 @@ int main (int argc, const char** argv)
 
                     detector->detect(subimg, keypoints, submask);
                     bowides[k_idx]->compute(subimg, keypoints, histogram);
+
                     image_histograms.push_back(histogram);
                 
                 }
@@ -132,12 +127,14 @@ int main (int argc, const char** argv)
         }
     
     }
+
+    cout << "Finished dogs" << endl;
     
     ifstream catfile(cats_file.c_str());
 
     while (getline(catfile, line))
     {
-
+        cout << line << endl;
         vector<Mat> image_histograms;
         img = imread(line, CV_LOAD_IMAGE_COLOR);
         cvtColor(img,grayimg,CV_BGR2GRAY);
@@ -163,6 +160,7 @@ int main (int argc, const char** argv)
                     Mat subimg(grayimg, cv::Rect(hstep * m, vstep * n, hstep, vstep));
                     Mat submask(mask, cv::Rect(hstep * m, vstep * n, hstep, vstep));
 
+
                     detector->detect(subimg,keypoints, submask);
                     bowides[k_idx]->compute(subimg, keypoints, histogram);
                     image_histograms.push_back(histogram);
@@ -176,6 +174,7 @@ int main (int argc, const char** argv)
     
     }
     
+    cout << "Finished Cats" << endl;
 
     for (int k_idx = 0; k_idx < 4; k_idx++)
     {
