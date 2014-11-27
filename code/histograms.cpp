@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <iterator>
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/ml/ml.hpp>
@@ -10,10 +11,14 @@
 using namespace std;
 using namespace cv;
 
-String out_name = "eval";
+int n_ks = 1;
+int K_values[1] = { 1000 };
+String out_name = "train";
 
-String cats_file = "./cat_eval.txt";
-String dogs_file = "./dog_eval.txt";
+double w = 0.6;
+
+String cats_file = "./cat_train_final.txt";
+String dogs_file = "./dog_train_final.txt";
 
 void save_sparse_descriptors(ostream& stream, vector<int> labels,
         vector< vector<Mat> > data) 
@@ -23,7 +28,7 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
     {
         vector<Mat> histograms = data[i];
         stream << labels[i];
-
+        cout << labels[i];
         for (int k = 0; k < histograms.size(); ++k)
         {
             Mat descriptor = histograms[k];
@@ -50,21 +55,21 @@ void save_sparse_descriptors(ostream& stream, vector<int> labels,
 int main (int argc, const char** argv) 
 {
 
-    int K_values[4] = { 1000, 1200, 1400, 1600 };
-
     Ptr<FeatureDetector > detector(new SiftFeatureDetector());
-    Ptr<BOWImgDescriptorExtractor> bowides[4];
+    Ptr<FeatureDetector > detector2(new SurfFeatureDetector(400));
+    Ptr<BOWImgDescriptorExtractor> bowides[n_ks];
 
     FileStorage f("kmeans.yml", FileStorage::READ);
 
     stringstream param_name;
-    vector<KeyPoint> keypoints;
+    vector<KeyPoint> keypoints, keypoints2;
+    vector<KeyPoint> skeypoints, skeypoints2;
 
     vector<int> labels;
 
     Mat img, grayimg;
 
-    for (int k_idx = 0; k_idx < 4; k_idx++) 
+    for (int k_idx = 0; k_idx < n_ks; k_idx++) 
     {
         Mat vocabulary;
         Ptr<DescriptorExtractor> extractor(new
@@ -82,54 +87,10 @@ int main (int argc, const char** argv)
     }
 
     ifstream dogfile(dogs_file.c_str());
-    vector< vector<Mat> > histograms[4];
+    vector< vector<Mat> > histograms[n_ks];
     string line;
-    Mat histogram;
-
-    while (getline(dogfile, line))
-    {
-        cout << line << endl;
-        vector<Mat> image_histograms;
-        img = imread(line, CV_LOAD_IMAGE_COLOR);
-        cvtColor(img,grayimg,CV_BGR2GRAY);
-        Mat mask, bgdModel, fgdModel;
-
-        grabCut(img, mask, Rect(img.cols/10, img.rows/10, 
-                    (8 * img.cols)/10, (8 * img.rows)/10), 
-                    bgdModel, fgdModel, 1, GC_INIT_WITH_RECT);
-
-        detector->detect(grayimg,keypoints, mask);
-
-        for (int k_idx = 0; k_idx < 4; k_idx++)
-        {
-
-            bowides[k_idx]->compute(grayimg, keypoints, histogram);
-            image_histograms.push_back(histogram);
-
-            int hstep = grayimg.cols/2;
-            int vstep = grayimg.rows/2;
-
-            for (int m = 0; m < 2; m++) {
-                for (int n = 0; n < 2; n++) {
-                    Mat subimg(grayimg, cv::Rect(hstep * m, vstep * n, hstep, vstep));
-                    Mat submask(mask, cv::Rect(hstep * m, vstep * n, hstep, vstep));
-
-                    detector->detect(subimg, keypoints, submask);
-                    bowides[k_idx]->compute(subimg, keypoints, histogram);
-
-                    image_histograms.push_back(histogram);
-                
-                }
-            }
-
-            labels.push_back(0);
-            histograms[k_idx].push_back(image_histograms);
-        }
-    
-    }
-
-    cout << "Finished dogs" << endl;
-    
+    Mat histogram, histogram2;
+ 
     ifstream catfile(cats_file.c_str());
 
     while (getline(catfile, line))
@@ -138,37 +99,57 @@ int main (int argc, const char** argv)
         vector<Mat> image_histograms;
         img = imread(line, CV_LOAD_IMAGE_COLOR);
         cvtColor(img,grayimg,CV_BGR2GRAY);
-        Mat mask, bgdModel, fgdModel;
+        Mat mask, antimask, bgdModel, fgdModel;
 
         grabCut(img, mask, Rect(img.cols/10, img.rows/10, 
                     (8 * img.cols)/10, (8 * img.rows)/10), 
                     bgdModel, fgdModel, 1, GC_INIT_WITH_RECT);
 
-        detector->detect(grayimg,keypoints, mask);
+        bitwise_not(mask, antimask);
 
-        for (int k_idx = 0; k_idx < 4; k_idx++)
+        detector->detect(grayimg,keypoints,mask);
+        detector->detect(grayimg,keypoints2,antimask);
+
+        detector2->detect(grayimg,skeypoints, mask);
+        detector2->detect(grayimg,skeypoints2, antimask);
+
+        keypoints.insert(
+                keypoints.end(),
+                skeypoints.begin(),
+                skeypoints.end()
+                );
+
+        keypoints2.insert(
+                keypoints2.end(),
+                skeypoints2.begin(),
+                skeypoints2.end()
+                );
+
+        for (int k_idx = 0; k_idx < n_ks; k_idx++)
         {
 
             bowides[k_idx]->compute(grayimg, keypoints, histogram);
-            image_histograms.push_back(histogram);
+            bowides[k_idx]->compute(grayimg, keypoints2, histogram2);
+            image_histograms.push_back(w * histogram + (1 - w) * histogram2);
 
             int hstep = grayimg.cols/2;
             int vstep = grayimg.rows/2;
 
-            for (int m = 0; m < 2; m++) {
+        /*    for (int m = 0; m < 2; m++) {
                 for (int n = 0; n < 2; n++) {
                     Mat subimg(grayimg, cv::Rect(hstep * m, vstep * n, hstep, vstep));
-                    Mat submask(mask, cv::Rect(hstep * m, vstep * n, hstep, vstep));
+                //    Mat submask(mask, cv::Rect(hstep * m, vstep * n, hstep, vstep));
 
 
-                    detector->detect(subimg,keypoints, submask);
+                    detector->detect(subimg,keypoints);
                     bowides[k_idx]->compute(subimg, keypoints, histogram);
                     image_histograms.push_back(histogram);
                 
                 }
-            }
+            }*/
 
             labels.push_back(1);
+            cout << "fef" << endl;
             histograms[k_idx].push_back(image_histograms);
         }
     
@@ -176,7 +157,70 @@ int main (int argc, const char** argv)
     
     cout << "Finished Cats" << endl;
 
-    for (int k_idx = 0; k_idx < 4; k_idx++)
+    while (getline(dogfile, line))
+    {
+        cout << line << endl;
+        vector<Mat> image_histograms;
+        img = imread(line, CV_LOAD_IMAGE_COLOR);
+        cvtColor(img,grayimg,CV_BGR2GRAY);
+        Mat mask, antimask, bgdModel, fgdModel;
+
+        grabCut(img, mask, Rect(img.cols/10, img.rows/10, 
+                    (8 * img.cols)/10, (8 * img.rows)/10), 
+                   bgdModel, fgdModel, 1, GC_INIT_WITH_RECT);
+
+        bitwise_not(mask, antimask);
+
+        detector->detect(grayimg,keypoints, mask);
+        detector->detect(grayimg,keypoints2, antimask);
+
+        detector2->detect(grayimg,skeypoints, mask);
+        detector2->detect(grayimg,skeypoints2, antimask);
+
+        keypoints.insert(
+                keypoints.end(),
+                skeypoints.begin(),
+                skeypoints.end()
+                );
+
+        keypoints2.insert(
+                keypoints2.end(),
+                skeypoints2.begin(),
+                skeypoints2.end()
+                );
+
+        for (int k_idx = 0; k_idx < n_ks; k_idx++)
+        {
+
+            bowides[k_idx]->compute(grayimg, keypoints, histogram);
+            bowides[k_idx]->compute(grayimg, keypoints2, histogram2);
+            image_histograms.push_back(w * histogram + (1 - w) * histogram2);
+
+            int hstep = grayimg.cols/2;
+            int vstep = grayimg.rows/2;
+
+        /*    for (int m = 0; m < 2; m++) {
+                for (int n = 0; n < 2; n++) {
+                    Mat subimg(grayimg, cv::Rect(hstep * m, vstep * n, hstep, vstep));
+                  //  Mat submask(mask, cv::Rect(hstep * m, vstep * n, hstep, vstep));
+
+                    detector->detect(subimg, keypoints);
+                    bowides[k_idx]->compute(subimg, keypoints, histogram);
+
+                    image_histograms.push_back(histogram);
+                
+                }
+            }*/
+
+            labels.push_back(0);
+            histograms[k_idx].push_back(image_histograms);
+        }
+    
+    }
+
+    cout << "Finished dogs" << endl;
+   
+    for (int k_idx = 0; k_idx < n_ks; k_idx++)
     {
         param_name << out_name << "_" << K_values[k_idx];
 
